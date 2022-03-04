@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>CompilerKit Introduction</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CompilerKit Introduction</h1>
+</header>
+<p>CompilerKit is a small toolkit used to build recursive-descent
+parsers and compilers. There are four main parts to CompilerKit, each
+discussed and documented on their own page:</p>
+<ul>
+<li><a href="scanner.html"><code>Scanner</code></a>, which is used to
+build the lexical analysis portion of your compiler;</li>
+<li><a href="parser.html"><code>Parser</code></a>, and the derived
+<code>RecoveringParser</code>, which are used to build recursive descent
+parsers;</li>
+<li><a href="sema.html"><code>Sema</code></a>, which provides tools to
+build the semantic analysis portion of your compiler;</li>
+<li>and <a href="codegen.html"><code>Codegen</code></a>, an artifact
+generator that lets you emit small programs that run in a simplistic
+virtual machine.</li>
+</ul>
+<p>There are also some ancillary modules that are used throughout the
+source:</p>
+<ul>
+<li><a href="token.html"><code>Token</code></a> defines a source token
+type, which encodes text, a type and a location;</li>
+<li><a href="error.html"><code>Error</code></a> defines an error type
+and convenience functions to report them;</li>
+<li><a href="program.html"><code>Program</code></a> defines a simplistic
+machine language and lets you emit and run programs in a basic virtual
+machine runtime.</li>
+</ul>
+</body>
+</html>

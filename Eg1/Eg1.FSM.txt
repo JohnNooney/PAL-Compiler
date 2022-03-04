@@ -1,0 +1,48 @@
+
+Eg1 - An FSM Example
+==============
+
+The simple tokens handled are  "=" ">" ">=".
+The microsyntax tokens are defined as follows (as .Net regular expressions):
+		Identifier <|[a-zA-Z]\w*
+		Integer <|\d+
+
+|n|  indicates a final state.
+<==+ indicates a looping transition.
+...  indicates any character not explicitly
+     defined for other transitions from the state.
+
+   0 <===+ whitespace
+   |
+   |
+   |   a-z A-Z
+   +------------> |1| <===+ a-z A-Z 0-9
+   |        Identifier
+   |
+   |
+   |   0-9
+   +------------> |2| <===+ 0-9
+   |           Integer
+   |
+   |
+   |   =
+   +------------> |3|
+   |              "="
+   |
+   |
+   |   >                 =
+   +------------> |4| --------> |5|
+   |              ">"          ">="
+   |
+   |   EOF
+   +------------> |6|
+   |         "end-of-file"
+   |
+   | ...
+   |
+   V
+  |7|
+"invalid-char"
+
+
+(c) A.C.Milne 13th April 2011.
