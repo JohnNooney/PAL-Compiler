@@ -1,0 +1,50 @@
+An FSM for Block-1 Token Finding.
+=================================
+
+|n|  indicates a final state.
+<==+ indicates a looping transition.
+...  indicates any character not explicitly
+     defined for other transitions from the state.
+
+
+   0 <==+ whitespace
+   |
+   |
+   |
+   | a-z A-Z                                 Following id's are keywords:
+   +----------> |1| <==+ a-z A-Z 0-9 _ .       begin end int real
+   |           <id>                            get put let for to do
+   |
+   |
+   |  0-9   <int>
+   +-------> |2| <==+ 0-9
+   |          |
+   |          | .
+   |          V
+   |         |3| <==+ 0-9
+   |       <real>
+   |
+   |
+   |  :         =
+   +-----> 4 -----> |5|
+   |                ":="
+   |
+   |
+   | + - * / ( ) ,
+   +---------------> |6| 
+   |               single char punctuation
+   |
+   |
+   |  EOF
+   +-------> |7|
+   |        <eof>
+   |...
+   |
+   V
+  |8|
+  <invalid-char>
+
+
+
+(c) Allan C. Milne
+6 June 2006
