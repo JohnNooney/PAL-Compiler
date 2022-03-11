@@ -6,6 +6,6 @@ public:
     MyScanner(std::istream& source) : Scanner(source){}
     virtual ~MyScanner() {}
 
-        Token lex() override;
-    }
+    Token lex() override;
+private:
 };
