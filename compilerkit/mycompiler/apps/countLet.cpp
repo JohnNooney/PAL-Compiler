@@ -1,4 +1,6 @@
 #include "../scanner.hpp"
+#include <iostream>
+#include <fstream>
 
 const char *program = NULL;
 
