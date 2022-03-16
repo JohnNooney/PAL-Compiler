@@ -14,6 +14,8 @@
 
 // Our actual classes!
 #include "mycompiler/MyScanner.hpp"
+#include "mycompiler/MyParser.hpp"
+#include "mycompiler/apps/countLet.hpp"
 
 // Attempts to load a file from a path into a read-only file stream, or exits the program
 // entirely if it fails. This is a barebones implementation -- feel free to add to it to
@@ -55,7 +57,17 @@ int main(int arg_count, const char* args[]) {
 
 	// create scanner object
 	MyScanner scanner = MyScanner(source);
+	scanner.lex();
 
+	//create parser object
+	MyParser parser = MyParser(scanner);
 
+	// run test program
+	/*CountLet countLet = CountLet();
+	std::string cmd{ args[0] };
+	if (cmd == "count-let") {
+		return countLet.count_lets(source);
+	}*/
+	
 	return 0;
 }
