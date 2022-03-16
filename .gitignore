@@ -3,6 +3,7 @@
 
 *.vscode
 *.vs
+*.vcxproj.
 
 Debug
 
@@ -35,3 +36,4 @@ Debug
 *.exe
 *.out
 *.app
+*.vcxproj
