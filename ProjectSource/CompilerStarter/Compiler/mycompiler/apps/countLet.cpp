@@ -27,6 +27,8 @@ void throw_error(const std::string& error){
     std::exit(EXIT_FAILURE);
 }
 
+/*
+
 int main(int args_count, const char** args) {
     program = args[0];
 
@@ -43,3 +45,4 @@ int main(int args_count, const char** args) {
     
     return 0;
 }
+*/
