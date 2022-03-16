@@ -13,7 +13,7 @@
 #include <fstream>
 
 // Our actual classes!
-#include "mycompiler/scanner.hpp"
+#include "mycompiler/MyScanner.hpp"
 
 // Attempts to load a file from a path into a read-only file stream, or exits the program
 // entirely if it fails. This is a barebones implementation -- feel free to add to it to
