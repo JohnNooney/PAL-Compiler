@@ -147,6 +147,9 @@
     <ClCompile Include="CompilerKit\Scanner.cpp" />
     <ClCompile Include="CompilerKit\Sema.cpp" />
     <ClCompile Include="F:\Github Repos\PAL-Compiler\compilerkit\mycompiler\apps\listIdentifier.cpp" />
+    <ClCompile Include="mycompiler\apps\countLet.cpp" />
+    <ClCompile Include="mycompiler\apps\listIdentifier.cpp" />
+    <ClCompile Include="mycompiler\scanner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp" />
@@ -157,6 +160,10 @@
     <ClInclude Include="CompilerKit\Sema.hpp" />
     <ClInclude Include="CompilerKit\Token.hpp" />
     <ClInclude Include="ExampleScanner.h" />
+    <ClInclude Include="mycompiler\scanner.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PAL\block-1-test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

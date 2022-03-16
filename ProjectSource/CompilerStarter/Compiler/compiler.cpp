@@ -13,7 +13,7 @@
 #include <fstream>
 
 // Our actual classes!
-#include "ExampleScanner.h"
+#include "mycompiler/scanner.hpp"
 
 // Attempts to load a file from a path into a read-only file stream, or exits the program
 // entirely if it fails. This is a barebones implementation -- feel free to add to it to
@@ -53,10 +53,9 @@ int main(int arg_count, const char* args[]) {
 	// Load the source file into a stream.
 	std::ifstream source = load_file(args[1]);
 
-	// <your code here!>
-	//
-	// ExampleScanner scanner(source);
-	// ...
+	// create scanner object
+	MyScanner scanner = MyScanner(source);
+
 
 	return 0;
 }
