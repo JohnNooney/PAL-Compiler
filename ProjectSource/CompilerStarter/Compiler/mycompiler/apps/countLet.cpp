@@ -1,10 +1,11 @@
 #include "../MyScanner.hpp"
 #include <iostream>
 #include <fstream>
+#include "countLet.hpp"
 
 const char *program = NULL;
 
-int count_lets(std::istream& source){
+int CountLet::count_lets(std::istream& source){
     std::cout << "counting let statements... \n";
 
     MyScanner scanner(source);
@@ -22,7 +23,7 @@ int count_lets(std::istream& source){
 }
 
 [[noreturn]]
-void throw_error(const std::string& error){
+void CountLet::throw_error(const std::string& error){
     std::cerr << "fatal error: " << error << "\n";
     std::exit(EXIT_FAILURE);
 }
@@ -46,3 +47,4 @@ int main(int args_count, const char** args) {
     return 0;
 }
 */
+
