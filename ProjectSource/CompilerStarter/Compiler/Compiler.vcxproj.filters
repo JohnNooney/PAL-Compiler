@@ -51,6 +51,9 @@
     <ClCompile Include="mycompiler\scanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mycompiler\MyScanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp">
@@ -77,7 +80,7 @@
     <ClInclude Include="ExampleScanner.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="mycompiler\scanner.hpp">
+    <ClInclude Include="mycompiler\MyScanner.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
