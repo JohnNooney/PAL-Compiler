@@ -37,3 +37,6 @@ Debug
 *.out
 *.app
 *.vcxproj
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.filters
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.user
