@@ -146,11 +146,8 @@
     <ClCompile Include="CompilerKit\Program.cpp" />
     <ClCompile Include="CompilerKit\Scanner.cpp" />
     <ClCompile Include="CompilerKit\Sema.cpp" />
-    <ClCompile Include="F:\Github Repos\PAL-Compiler\compilerkit\mycompiler\apps\listIdentifier.cpp" />
     <ClCompile Include="mycompiler\apps\countLet.cpp" />
-    <ClCompile Include="mycompiler\apps\listIdentifier.cpp" />
     <ClCompile Include="mycompiler\MyScanner.cpp" />
-    <ClCompile Include="mycompiler\scanner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp" />

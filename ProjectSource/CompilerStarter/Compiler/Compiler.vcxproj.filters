@@ -39,16 +39,7 @@
     <ClCompile Include="compiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="F:\Github Repos\PAL-Compiler\compilerkit\mycompiler\apps\listIdentifier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mycompiler\apps\countLet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mycompiler\apps\listIdentifier.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mycompiler\scanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mycompiler\MyScanner.cpp">
