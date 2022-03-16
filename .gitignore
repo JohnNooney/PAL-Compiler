@@ -3,7 +3,10 @@
 
 *.vscode
 *.vs
-*.vcxproj.
+*.vcxproj
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.filters
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.user
 
 Debug
 
@@ -36,7 +39,4 @@ Debug
 *.exe
 *.out
 *.app
-*.vcxproj
-ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj
-ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.filters
-ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.user
+
