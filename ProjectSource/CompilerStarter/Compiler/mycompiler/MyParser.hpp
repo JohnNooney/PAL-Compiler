@@ -12,4 +12,11 @@ public:
 private:
     void recDeclarations();
     void recBlock();
+    void recStatement();
+    void recStatementList();
+    void recLet();
+    void recFor();
+    void recExpression();
+    void recTerm();
+    void recFactor();
 };
