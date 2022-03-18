@@ -1,1 +1,1 @@
-rea num1, num2
+real num1, num2
