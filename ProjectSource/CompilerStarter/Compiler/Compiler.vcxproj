@@ -147,6 +147,7 @@
     <ClCompile Include="CompilerKit\Scanner.cpp" />
     <ClCompile Include="CompilerKit\Sema.cpp" />
     <ClCompile Include="mycompiler\apps\countLet.cpp" />
+    <ClCompile Include="mycompiler\MyParser.cpp" />
     <ClCompile Include="mycompiler\MyScanner.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -157,11 +158,13 @@
     <ClInclude Include="CompilerKit\Scanner.hpp" />
     <ClInclude Include="CompilerKit\Sema.hpp" />
     <ClInclude Include="CompilerKit\Token.hpp" />
-    <ClInclude Include="ExampleScanner.h" />
+    <ClInclude Include="mycompiler\apps\countLet.hpp" />
+    <ClInclude Include="mycompiler\MyParser.hpp" />
     <ClInclude Include="mycompiler\MyScanner.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="PAL\block-1-test.txt" />
+    <Text Include="PAL\block1-sum.txt" />
+    <Text Include="PAL\block1-test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

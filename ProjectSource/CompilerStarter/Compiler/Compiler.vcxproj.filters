@@ -45,6 +45,9 @@
     <ClCompile Include="mycompiler\MyScanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mycompiler\MyParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp">
@@ -68,14 +71,18 @@
     <ClInclude Include="CompilerKit\Token.hpp">
       <Filter>Source Files\CompilerKit</Filter>
     </ClInclude>
-    <ClInclude Include="ExampleScanner.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="mycompiler\MyScanner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mycompiler\apps\countLet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mycompiler\MyParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="PAL\block-1-test.txt" />
+    <Text Include="PAL\block1-sum.txt" />
+    <Text Include="PAL\block1-test.txt" />
   </ItemGroup>
 </Project>
