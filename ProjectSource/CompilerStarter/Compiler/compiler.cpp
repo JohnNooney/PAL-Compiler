@@ -57,10 +57,11 @@ int main(int arg_count, const char* args[]) {
 
 	// create scanner object
 	MyScanner scanner = MyScanner(source);
-	scanner.lex();
+	//scanner.lex();
 
 	//create parser object
 	MyParser parser = MyParser(scanner);
+	parser.recStarter();
 
 	// run test program
 	/*CountLet countLet = CountLet();
