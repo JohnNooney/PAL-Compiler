@@ -1,5 +1,6 @@
 #include "../CompilerKit/Parser.hpp"
 using namespace CompilerKit;
+
 class MyParser : public Parser {
 public:
 
