@@ -1,1 +1,3 @@
 real num1, num2
+begin
+end
