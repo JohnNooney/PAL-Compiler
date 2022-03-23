@@ -49,7 +49,7 @@ void MyParser::recStatement()
 		expect(Token::Identifier);
 	}
 	else if (match("put")) {
-		expect(Token::Identifier);
+		recExpression();
 	}
 	else {
 		syntaxError("<statement>");
@@ -97,7 +97,7 @@ void MyParser::recLet() {
 void MyParser::recExpression() {
 	recTerm();
 	while (match("+") || match("-")) {
-		recExpression();
+		recTerm();
 	}
 }
 
