@@ -16,6 +16,7 @@
 #include "mycompiler/MyScanner.hpp"
 #include "mycompiler/MyParser.hpp"
 #include "mycompiler/apps/countLet.hpp"
+#include "mycompiler/MyParserEBNF.hpp"
 
 // Attempts to load a file from a path into a read-only file stream, or exits the program
 // entirely if it fails. This is a barebones implementation -- feel free to add to it to
@@ -59,9 +60,13 @@ int main(int arg_count, const char* args[]) {
 	MyScanner scanner = MyScanner(source);
 	//scanner.lex();
 
-	//create parser object
-	MyParser parser = MyParser(scanner);
-	parser.recStarter();
+	// use BNF Parser
+	/*MyParser parser = MyParser(scanner);
+	parser.recStarter();*/
+
+	// use EBNF Parser
+	MyParserEBNF parserEBNF = MyParserEBNF(scanner);
+	parserEBNF.recStarter();
 
 	// run test program
 	/*CountLet countLet = CountLet();
