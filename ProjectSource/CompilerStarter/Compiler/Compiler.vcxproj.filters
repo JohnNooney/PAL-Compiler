@@ -48,6 +48,9 @@
     <ClCompile Include="mycompiler\MyParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mycompiler\MyParserEBNF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mycompiler\MyParser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mycompiler\MyParserEBNF.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

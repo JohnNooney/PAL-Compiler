@@ -148,6 +148,7 @@
     <ClCompile Include="CompilerKit\Sema.cpp" />
     <ClCompile Include="mycompiler\apps\countLet.cpp" />
     <ClCompile Include="mycompiler\MyParser.cpp" />
+    <ClCompile Include="mycompiler\MyParserEBNF.cpp" />
     <ClCompile Include="mycompiler\MyScanner.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="CompilerKit\Token.hpp" />
     <ClInclude Include="mycompiler\apps\countLet.hpp" />
     <ClInclude Include="mycompiler\MyParser.hpp" />
+    <ClInclude Include="mycompiler\MyParserEBNF.hpp" />
     <ClInclude Include="mycompiler\MyScanner.hpp" />
   </ItemGroup>
   <ItemGroup>
