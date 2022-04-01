@@ -150,6 +150,7 @@
     <ClCompile Include="mycompiler\MyParser.cpp" />
     <ClCompile Include="mycompiler\MyParserEBNF.cpp" />
     <ClCompile Include="mycompiler\MyScanner.cpp" />
+    <ClCompile Include="mycompiler\MySema.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="mycompiler\MyParser.hpp" />
     <ClInclude Include="mycompiler\MyParserEBNF.hpp" />
     <ClInclude Include="mycompiler\MyScanner.hpp" />
+    <ClInclude Include="mycompiler\MySema.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="PAL\block1-sum.txt" />
