@@ -1,13 +1,16 @@
 #include "../CompilerKit/Parser.hpp"
+#include "MySema.hpp"
 using namespace CompilerKit;
+
 
 class MyParserEBNF : public Parser {
 public:
 
-    MyParserEBNF(Scanner& scanner) : Parser(scanner) {}
+    MyParserEBNF(Scanner& scanner) : Parser(scanner), sema(*this) {}
     virtual ~MyParserEBNF() {}
 
-    void recStarter();
+    bool compile();
+    //void recStarter();
 
 private:
     void recDeclaration();
@@ -15,7 +18,11 @@ private:
     void recBlock();
     void recLet();
     void recFor();
-    void recExpression();
-    void recTerm();
-    void recFactor();
+
+    // Return types when variables have been figured out. This pushes the sema to the next step
+    Type recExpression();
+    Type recTerm();
+    Type recFactor();
+
+    MySema sema;
 };

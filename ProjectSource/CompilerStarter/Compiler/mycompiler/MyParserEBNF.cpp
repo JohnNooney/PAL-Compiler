@@ -1,36 +1,53 @@
 #include "MyParserEBNF.hpp"
+#include "MySema.hpp"
 
-void MyParserEBNF::recStarter() {
+bool MyParserEBNF::compile() {
 	scanner().lex();
 
+	Scope::open();
 	recDeclaration();
 	recBlock();
+	Scope::close();
+
+	return errors().size() == 0;
 }
 
 // This is based off the EBNF for declaration
 // <Declaration> ::= (int | real) Identifier ( , Identifier)* ;
 void MyParserEBNF::recDeclaration()
 {
-	if (match("int") || match("real")) {
-		do {
-			expect(Token::Identifier);
-		} while (match(","));
+	//use Sema to store type
+	Type type = Type::Invalid;
+	if (match("int")) {
+		type = Type::Integer;
+	} 
+	else if (match("real")) {
+		type = Type::Real;
 	}
+
+	// cycle through each decleration 
+	do {
+		Token var = current();
+		if (expect(Token::Identifier)) {
+			// only add to sema if valid
+			sema.define(var, type);
+		}
+		
+	} while (match(","));
 }
 
 // Based off the EBNF of Block
-// <Block> ::= <Statement> | begin <Statement-List> end ;
+// <Block> ::= <Statement> | begin(<Statement>)* end;
 void MyParserEBNF::recBlock()
 {
-	if (have("let") || have("for") || have("get") || have("put")) {
-		recStatement();
-	}
-	else {
-		expect("begin");
+	if (match("begin")) {
 		while (have("let") || have("for") || have("get") || have("put")) {
 			recStatement();
 		}
-		expect("end");
+		match("end");
+	}
+	else {
+		recStatement();
 	}
 	
 }
@@ -50,7 +67,11 @@ void MyParserEBNF::recStatement()
 		recFor();
 	}
 	else if (match("get")) {
-		expect(Token::Identifier);
+		// return the variable 
+		Token var = current();
+		if (expect(Token::Identifier)) {
+			sema.checkVariable(var);
+		}
 	}
 	else if (match("put")) {
 		recExpression();
@@ -78,56 +99,70 @@ void MyParserEBNF::recFor() {
 // <Let-Statememt> ::= let Identifier := <Expression> ;
 void MyParserEBNF::recLet() {
 	expect("let");
+
+	Token var = current();
 	expect(Token::Identifier);
 	expect(":=");
-	recExpression();
-}
+	Type right = recExpression();
 
-//Based off the BNF
-// <Expression> ::= <Term> <Rest-Expr> ;
-// and 
-// <Rest-Expr> ::= * <Term> <Rest-Expr> | 
-//				   / <Term> <Rest-Expr> |
-//				   <>
-void MyParserEBNF::recExpression() {
-	recTerm();
-	while (match("+") || match("-")) {
-		recTerm();
-	}
-}
-
-//Base off the EBNF 
-// <Term> ::= <Factor> <Rest-Term> ;
-// and
-// <Rest-Term> ::= * <Factor> <Rest-Term> | 
-//				   / <Facor> <Rest-Term> |
-//				   <>
-void MyParserEBNF::recTerm()
-{
-	recFactor();
-	while (match("*") || match("/")) {
-		recTerm();
-	}
+	// compare types of variable and expression
+	sema.checkAssign(var, right);
 }
 
 //Based off the EBNF
-void MyParserEBNF::recFactor()
-{
-	if (match(Token::Identifier)) {
+// <Expression> ::= <Term> ( ("+"|-) <Term>)* ;
+Type MyParserEBNF::recExpression() {
+	auto type = recTerm();
+	Token op = current();
 
+	while (match("+") || match("-")) {
+		auto right = recTerm();
+		type = sema.checkExpression(type, op, right);
+		op = current();
+	}
+
+	return type;
+}
+
+//Base off the EBNF 
+// <Term> ::= <Factor> ( (*|/) <Factor>)* ;
+Type MyParserEBNF::recTerm()
+{
+	auto type = recFactor();
+	Token op = current();
+	
+	while (match("*") || match("/")) {
+		auto right = recFactor();
+		type = sema.checkExpression(type, op, right);
+		op = current();
+	}
+
+	return type;
+}
+
+//Based off the EBNF
+//<Factor> ::= Identifier | IntValue | RealValue | "(" <Expression> ")" ;
+Type MyParserEBNF::recFactor()
+{
+	if (have(Token::Identifier)) {
+		Token var = current();
+		expect(Token::Identifier);
+		return sema.checkVariable(var);
 	}
 	else if (match(Token::Integer)) {
-
+		return Type::Integer;
 	}
 	else if (match(Token::Real)) {
-
+		return Type::Real;
 	}
 	else if (match("(")) {
-		recExpression();
+		auto type = recExpression();
 		expect(")");
+		return type;
 	}
 	else {
 		syntaxError("<factor>");
+		return Type::Invalid;
 	}
 }
 
