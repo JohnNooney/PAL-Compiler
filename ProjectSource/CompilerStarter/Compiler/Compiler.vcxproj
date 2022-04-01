@@ -146,11 +146,11 @@
     <ClCompile Include="CompilerKit\Program.cpp" />
     <ClCompile Include="CompilerKit\Scanner.cpp" />
     <ClCompile Include="CompilerKit\Sema.cpp" />
-    <ClCompile Include="mycompiler\apps\countLet.cpp" />
-    <ClCompile Include="mycompiler\MyParser.cpp" />
-    <ClCompile Include="mycompiler\MyParserEBNF.cpp" />
-    <ClCompile Include="mycompiler\MyScanner.cpp" />
-    <ClCompile Include="mycompiler\MySema.cpp" />
+    <ClCompile Include="myblock1compiler\apps\countLet.cpp" />
+    <ClCompile Include="myblock1compiler\MyParser.cpp" />
+    <ClCompile Include="myblock1compiler\MyParserEBNF.cpp" />
+    <ClCompile Include="myblock1compiler\MyScanner.cpp" />
+    <ClCompile Include="myblock1compiler\MySema.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp" />
@@ -160,15 +160,15 @@
     <ClInclude Include="CompilerKit\Scanner.hpp" />
     <ClInclude Include="CompilerKit\Sema.hpp" />
     <ClInclude Include="CompilerKit\Token.hpp" />
-    <ClInclude Include="mycompiler\apps\countLet.hpp" />
-    <ClInclude Include="mycompiler\MyParser.hpp" />
-    <ClInclude Include="mycompiler\MyParserEBNF.hpp" />
-    <ClInclude Include="mycompiler\MyScanner.hpp" />
-    <ClInclude Include="mycompiler\MySema.hpp" />
+    <ClInclude Include="myblock1compiler\apps\countLet.hpp" />
+    <ClInclude Include="myblock1compiler\MyParser.hpp" />
+    <ClInclude Include="myblock1compiler\MyParserEBNF.hpp" />
+    <ClInclude Include="myblock1compiler\MyScanner.hpp" />
+    <ClInclude Include="myblock1compiler\MySema.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="PAL\block1-sum.txt" />
-    <Text Include="PAL\block1-test.txt" />
+    <Text Include="BLOCK1\block1-sum.txt" />
+    <Text Include="BLOCK1\block1-test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

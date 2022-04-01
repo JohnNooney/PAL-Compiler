@@ -39,16 +39,19 @@
     <ClCompile Include="compiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mycompiler\apps\countLet.cpp">
+    <ClCompile Include="myblock1compiler\apps\countLet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mycompiler\MyScanner.cpp">
+    <ClCompile Include="myblock1compiler\MyScanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mycompiler\MyParser.cpp">
+    <ClCompile Include="myblock1compiler\MyParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mycompiler\MyParserEBNF.cpp">
+    <ClCompile Include="myblock1compiler\MyParserEBNF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="myblock1compiler\MySema.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,21 +77,24 @@
     <ClInclude Include="CompilerKit\Token.hpp">
       <Filter>Source Files\CompilerKit</Filter>
     </ClInclude>
-    <ClInclude Include="mycompiler\MyScanner.hpp">
+    <ClInclude Include="myblock1compiler\MyScanner.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mycompiler\apps\countLet.hpp">
+    <ClInclude Include="myblock1compiler\apps\countLet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mycompiler\MyParser.hpp">
+    <ClInclude Include="myblock1compiler\MyParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mycompiler\MyParserEBNF.hpp">
+    <ClInclude Include="myblock1compiler\MyParserEBNF.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="myblock1compiler\MySema.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="PAL\block1-sum.txt" />
-    <Text Include="PAL\block1-test.txt" />
+    <Text Include="BLOCK1\block1-sum.txt" />
+    <Text Include="BLOCK1\block1-test.txt" />
   </ItemGroup>
 </Project>
