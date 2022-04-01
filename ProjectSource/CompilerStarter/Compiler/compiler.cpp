@@ -57,16 +57,20 @@ int main(int arg_count, const char* args[]) {
 	std::ifstream source = load_file(args[1]);
 
 	// create scanner object
-	MyScanner scanner = MyScanner(source);
-	//scanner.lex();
+	MyScanner scanner(source);
 
 	// use BNF Parser
 	/*MyParser parser = MyParser(scanner);
 	parser.recStarter();*/
 
 	// use EBNF Parser
-	MyParserEBNF parserEBNF = MyParserEBNF(scanner);
-	parserEBNF.recStarter();
+	MyParserEBNF parserEBNF(scanner);
+	bool success = parserEBNF.compile();
+
+	for (const auto& error : parserEBNF.errors()) {
+		std::cout << error << "\n";
+	}
+	std::cout << "done.\n";
 
 	// run test program
 	/*CountLet countLet = CountLet();
@@ -75,5 +79,5 @@ int main(int arg_count, const char* args[]) {
 		return countLet.count_lets(source);
 	}*/
 	
-	return 0;
+	return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
