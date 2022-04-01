@@ -1,3 +1,6 @@
+#ifndef _MYSEMA_HPP_
+#define _MYSEMA_HPP_
+
 #include "../CompilerKit/Sema.hpp"
 using namespace CompilerKit;
 
@@ -11,7 +14,9 @@ public:
     Type checkVariable(const Token& var);
     Type variableType(const Token& var);
 
-    Type checkExpression(Type lhs, const Token& op, Type rhs);
-    void checkBoolean(Type lhs, const Token& op, Type rhs);
-    void checkAssign(const Token& var, Type rhs);
+    Type checkExpression(Type left, const Token& op, Type right);
+    void checkBoolean(Type left, const Token& op, Type right);
+    void checkAssign(const Token& var, Type right);
 };
+
+#endif 
