@@ -1,16 +1,19 @@
+#ifndef _MYPARSEREBNF_HPP_
+#define _MYPARSEREBNF_HPP_
+
 #include "../CompilerKit/Parser.hpp"
 #include "MySema.hpp"
 using namespace CompilerKit;
 
 
-class MyParserEBNF : public Parser {
+class MyParserEBNF : public RecoveringParser{
 public:
 
-    MyParserEBNF(Scanner& scanner) : Parser(scanner), sema(*this) {}
+    MyParserEBNF(Scanner& scanner) : RecoveringParser(scanner), sema(*this) {}
     virtual ~MyParserEBNF() {}
 
     bool compile();
-    //void recStarter();
+    void recStarter();
 
 private:
     void recDeclaration();
@@ -26,3 +29,5 @@ private:
 
     MySema sema;
 };
+
+#endif 
