@@ -5,11 +5,15 @@ bool MyParserEBNF::compile() {
 	scanner().lex();
 
 	Scope::open();
-	recDeclaration();
-	recBlock();
+	recStarter();
 	Scope::close();
 
 	return errors().size() == 0;
+}
+
+void MyParserEBNF::recStarter() {
+	recDeclaration();
+	recBlock();
 }
 
 // This is based off the EBNF for declaration
