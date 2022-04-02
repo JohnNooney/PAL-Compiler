@@ -16,6 +16,7 @@ public:
 private:
     void recVarDecls();
     void recStatement();
+    bool statementCheck();
     void recAssignment();
     void recLoop();
     void recConditional();
@@ -24,7 +25,7 @@ private:
     void recTerm();
     void recFactor();
     void recValue();
-    void recBooleanExpr();
+    bool recBooleanExpr();
     void recIdentList();
 
 
