@@ -120,22 +120,53 @@ bool MyPALParser::recBooleanExpr()
 	return true;
 }
 
-// Based off the EBNF
+// Based off the EBNF - Input = read from standard input | Output = write to standard output
 // <I-o> ::= INPUT <IdentList> | OUTPUT <Expression>(, <Expression>)*;
 void MyPALParser::recIO()
 {
+	if (match("INPUT")) {
+		recIdentList();
+	}
+	else if (match("OUTPUT")) {
+		do {
+			recExpression();
+		}while (match(","))
+	}
+	else {
+		// TODO: Throw IO error
+	}
+	
+}
+
+// Based off the EBNF 
+// <IdentList> ::= Identifier ( , Identifier)* ;
+void MyPALParser::recIdentList()
+{
+	do {
+		expect(Token::Identifier);
+	} while (match(","));
 }
 
 // Based off the EBNF - should return the type
 // <Expression> ::= <Term> ( (+|-) <Term>)* ;
 void MyPALParser::recExpression()
 {
+	recTerm();
+	while (match("+") || match("-")) {
+		recTerm();
+	}
 }
 
-//void MyPALParser::recTerm()
-//{
-//}
-//
+// Based off the EBNF
+// <Term> ::= <Factor> ( (*|/) <Factor>)* ;
+void MyPALParser::recTerm()
+{
+	recFactor();
+	while (match("*") || match("/")) {
+		recFactor();
+	}
+}
+
 //void MyPALParser::recFactor()
 //{
 //}
@@ -144,6 +175,4 @@ void MyPALParser::recExpression()
 //{
 //}
 //
-//void MyPALParser::recIdentList()
-//{
-//}
+
