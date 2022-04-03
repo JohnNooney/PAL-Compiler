@@ -130,7 +130,7 @@ void MyPALParser::recIO()
 	else if (match("OUTPUT")) {
 		do {
 			recExpression();
-		}while (match(","))
+		} while (match(","));
 	}
 	else {
 		// TODO: Throw IO error
@@ -167,10 +167,26 @@ void MyPALParser::recTerm()
 	}
 }
 
+// Based off the EBNF
+// <Factor> ::= (+|-)? ( <Value> | "(" <Expression> ")" ) ;
 //void MyPALParser::recFactor()
-//{
-//}
-//
+{
+	if (match("+") || match("-")) {
+		// TODO: store token
+	}
+
+	if (match("(")) {
+		recExpression();
+		expect(")");
+		expect(";");
+	}
+	else {
+		recValue();
+	}
+
+
+}
+
 //void MyPALParser::recValue()
 //{
 //}
