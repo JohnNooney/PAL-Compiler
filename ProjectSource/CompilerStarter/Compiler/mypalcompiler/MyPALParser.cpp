@@ -19,7 +19,6 @@ void MyPALParser::recStarter() {
 		recStatement();
 	} while (statementCheck());
 	expect("END");
-	expect(";");
 }
 
 bool MyPALParser::statementCheck() {
@@ -39,6 +38,7 @@ void MyPALParser::recVarDecls() {
 		} 
 		else {
 			// TODO: throw error missing type
+			syntaxError("<VarDecls>");
 		}
 	}
 }
@@ -49,18 +49,23 @@ void MyPALParser::recStatement()
 {
 	if (have(Token::Identifier)) {
 		// recognise Assignment
+		recAssignment();
 	}
 	else if (have("UNTIL")) {
 		// recognise Loop
+		recLoop();
 	}
 	else if (have("IF")) {
 		// recognise Conditional
+		recConditional();
 	}
 	else if (have("INPUT")) {
 		// recognise IO
+		recIO();
 	}
 	else {
 		// Throw error
+		syntaxError("Statement");
 	}
 }
 
@@ -74,31 +79,68 @@ void MyPALParser::recAssignment()
 }
 
 // Based off the EBNF
+// If <BooleanExpr> is true, skip to the statement following the
+// ENDLOOP, otherwise execute the statements and repeat.
+// <Loop> :: = UNTIL <BooleanExpr> REPEAT(<Statement>) * ENDLOOP;
+void MyPALParser::recLoop()
+{
+	expect("UNTIL");
+	bool result = recBooleanExpr();
+
+	if (result) {
+		//skip token to end of statement
+		expect("REPEAT");
+		while (statementCheck()) {
+			recStatement();
+		}
+		expect("ENDLOOP");
+	}
+	else {
+		expect("REPEAT");
+
+		while (!result)
+		{
+			// loop through all statements inside
+			while (statementCheck()) {
+				recStatement();
+			}
+
+			result = recBooleanExpr();
+		}
+
+		expect("ENDLOOP");
+	}
+	
+}
+
+// Based off the EBNF
 // <Conditional> ::= IF <BooleanExpr> THEN (<Statement>)*
 //						(ELSE(<Statement>)*)?
 //						ENDIF;
 void MyPALParser::recConditional()
 {
 	expect("IF");
-	recBooleanExpr();
+	bool result = recBooleanExpr();
 	expect("THEN");
 	// TODO: Make sure to only run this code when bool is true
-	while (statementCheck()) {
-		recStatement();
+	if (result) {
+		while (statementCheck()) {
+			recStatement();
+		}
 	}
-	if (match("ELSE")) {
+	else if (!result && match("ELSE")) {
 		while (statementCheck()) {
 			recStatement();
 		}
 	}
 	expect("ENDIF");
-	expect(";");
 }
 
 // Based off the EBNF - returns bool based on the result
 // <BooleanExpr> ::= <Expression> ("<" | "=" | ">") <Expression> ;
 bool MyPALParser::recBooleanExpr()
-{
+{	
+	//TODO: store as left
 	recExpression();
 
 	if (match("<")) {
@@ -112,8 +154,10 @@ bool MyPALParser::recBooleanExpr()
 	}
 	else {
 		// TODO: Throw Error
+		syntaxError("<BooleanExpr>");
 	}
 
+	//TODO: store as right
 	recExpression();
 
 	// TODO: perform comparison
@@ -133,7 +177,7 @@ void MyPALParser::recIO()
 		} while (match(","));
 	}
 	else {
-		// TODO: Throw IO error
+		syntaxError("<I-o>");
 	}
 	
 }
@@ -169,7 +213,7 @@ void MyPALParser::recTerm()
 
 // Based off the EBNF
 // <Factor> ::= (+|-)? ( <Value> | "(" <Expression> ")" ) ;
-//void MyPALParser::recFactor()
+void MyPALParser::recFactor()
 {
 	if (match("+") || match("-")) {
 		// TODO: store token
@@ -178,11 +222,13 @@ void MyPALParser::recTerm()
 	if (match("(")) {
 		recExpression();
 		expect(")");
-		expect(";");
 	}
 	else {
 		recValue();
 	}
+
+	//TODO: new else = syntax error
+
 
 
 }
