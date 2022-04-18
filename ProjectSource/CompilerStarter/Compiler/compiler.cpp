@@ -13,10 +13,12 @@
 #include <fstream>
 
 // Our actual classes!
-#include "myblock1compiler/MyScanner.hpp"
-#include "myblock1compiler/MyParser.hpp"
-#include "myblock1compiler/apps/countLet.hpp"
-#include "myblock1compiler/MyParserEBNF.hpp"
+//#include "myblock1compiler/MyScanner.hpp"
+//#include "myblock1compiler/MyParser.hpp"
+//#include "myblock1compiler/apps/countLet.hpp"
+//#include "myblock1compiler/MyParserEBNF.hpp"
+#include "mypalcompiler/MyPALScanner.hpp"
+#include "mypalcompiler/MyPALParser.hpp"
 
 // Attempts to load a file from a path into a read-only file stream, or exits the program
 // entirely if it fails. This is a barebones implementation -- feel free to add to it to
@@ -57,19 +59,25 @@ int main(int arg_count, const char* args[]) {
 	std::ifstream source = load_file(args[1]);
 
 	// create scanner object
-	MyScanner scanner(source);
+	//MyScanner scanner(source);
+	MyPALScanner scanner(source);
 
 	// use BNF Parser
 	/*MyParser parser = MyParser(scanner);
 	parser.recStarter();*/
 
 	// use EBNF Parser
-	MyParserEBNF parserEBNF(scanner);
+	/*MyParserEBNF parserEBNF(scanner);
 	bool success = parserEBNF.compile();
 
 	for (const auto& error : parserEBNF.errors()) {
 		std::cout << error << "\n";
-	}
+	}*/
+
+	// use PAL Parser
+	MyPALParser parser(scanner);
+	parser.recStarter();
+
 	std::cout << "done.\n";
 
 	// run test program
@@ -79,5 +87,6 @@ int main(int arg_count, const char* args[]) {
 		return countLet.count_lets(source);
 	}*/
 	
-	return success ? EXIT_SUCCESS : EXIT_FAILURE;
+	//return success ? EXIT_SUCCESS : EXIT_FAILURE;
+	return 0;
 }
