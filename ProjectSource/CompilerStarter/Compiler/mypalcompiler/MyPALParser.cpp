@@ -213,6 +213,8 @@ void MyPALParser::recTerm()
 
 // Based off the EBNF
 // <Factor> ::= (+|-)? ( <Value> | "(" <Expression> ")" ) ;
+// and
+// <Value> ::= Identifier | IntegerValue | RealValue ;
 void MyPALParser::recFactor()
 {
 	if (match("+") || match("-")) {
@@ -223,18 +225,18 @@ void MyPALParser::recFactor()
 		recExpression();
 		expect(")");
 	}
-	else {
-		recValue();
+	else if (match(Token::Identifier)) {
+		
 	}
+	else if (match(Token::Integer)) {
 
-	//TODO: new else = syntax error
+	}
+	else if (match(Token::Real)) {
 
-
-
+	}
+	else {
+		syntaxError("<Factor>");
+	}
 }
 
-//void MyPALParser::recValue()
-//{
-//}
-//
 
