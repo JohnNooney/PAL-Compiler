@@ -4,11 +4,11 @@
 #include "../CompilerKit/Parser.hpp"
 using namespace CompilerKit;
 
-class MyPALParser: public RecoveringParser {
+class MyPALPureParser: public RecoveringParser {
 public:
 
-    MyPALParser(Scanner& scanner) : RecoveringParser(scanner) {}
-    virtual ~MyPALParser() {}
+    MyPALPureParser(Scanner& scanner) : RecoveringParser(scanner) {}
+    virtual ~MyPALPureParser() {}
 
     bool compile();
     void recStarter();
@@ -24,7 +24,6 @@ private:
     void recExpression();
     void recTerm();
     void recFactor();
-    void recValue();
     bool recBooleanExpr();
     void recIdentList();
 

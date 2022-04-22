@@ -1,4 +1,4 @@
-#include "MyPALParser.hpp"
+#include "MyPALPureParser.hpp"
 
 // Based off the program EBNF
 // <Program> ::= PROGRAM Identifier
@@ -6,7 +6,7 @@
 				IN(<Statement>) +
 				END;
 */
-void MyPALParser::recStarter() {
+void MyPALPureParser::recStarter() {
 	scanner().lex();
 
 	// start parsing
@@ -21,13 +21,13 @@ void MyPALParser::recStarter() {
 	expect("END");
 }
 
-bool MyPALParser::statementCheck() {
+bool MyPALPureParser::statementCheck() {
 	return have(Token::Identifier) || have("UNTIL") || have("IF") || have("INPUT") || have("OUTPUT") ? true : false;
 }
 
 // Based off the EBNF
 // <VarDecls> ::= (<IdentList> AS <Type>)* ;
-void MyPALParser::recVarDecls() {
+void MyPALPureParser::recVarDecls() {
 	while(have(Token::Identifier)) {
 		recIdentList();
 		expect("AS");
@@ -45,7 +45,7 @@ void MyPALParser::recVarDecls() {
 
 // Based off the EBNF 
 // <Statement> ::= <Assignment> | <Loop> | <Conditional> | <I-o> ;
-void MyPALParser::recStatement()
+void MyPALPureParser::recStatement()
 {
 	if (have(Token::Identifier)) {
 		// recognise Assignment
@@ -71,7 +71,7 @@ void MyPALParser::recStatement()
 
 // Based off the EBNF 
 // <Assignment> ::= Identifier = <Expression> ;
-void MyPALParser::recAssignment()
+void MyPALPureParser::recAssignment()
 {
 	expect(Token::Identifier);
 	expect("=");
@@ -82,7 +82,7 @@ void MyPALParser::recAssignment()
 // If <BooleanExpr> is true, skip to the statement following the
 // ENDLOOP, otherwise execute the statements and repeat.
 // <Loop> :: = UNTIL <BooleanExpr> REPEAT(<Statement>) * ENDLOOP;
-void MyPALParser::recLoop()
+void MyPALPureParser::recLoop()
 {
 	expect("UNTIL");
 	bool result = recBooleanExpr();
@@ -119,7 +119,7 @@ void MyPALParser::recLoop()
 // <Conditional> ::= IF <BooleanExpr> THEN (<Statement>)*
 //						(ELSE(<Statement>)*)?
 //						ENDIF;
-void MyPALParser::recConditional()
+void MyPALPureParser::recConditional()
 {
 	expect("IF");
 	bool result = recBooleanExpr();
@@ -142,7 +142,7 @@ void MyPALParser::recConditional()
 
 // Based off the EBNF - returns bool based on the result
 // <BooleanExpr> ::= <Expression> ("<" | "=" | ">") <Expression> ;
-bool MyPALParser::recBooleanExpr()
+bool MyPALPureParser::recBooleanExpr()
 {	
 	//TODO: store as left
 	recExpression();
@@ -170,7 +170,7 @@ bool MyPALParser::recBooleanExpr()
 
 // Based off the EBNF - Input = read from standard input | Output = write to standard output
 // <I-o> ::= INPUT <IdentList> | OUTPUT <Expression>(, <Expression>)*;
-void MyPALParser::recIO()
+void MyPALPureParser::recIO()
 {
 	if (match("INPUT")) {
 		recIdentList();
@@ -188,7 +188,7 @@ void MyPALParser::recIO()
 
 // Based off the EBNF 
 // <IdentList> ::= Identifier ( , Identifier)* ;
-void MyPALParser::recIdentList()
+void MyPALPureParser::recIdentList()
 {
 	do {
 		expect(Token::Identifier);
@@ -197,7 +197,7 @@ void MyPALParser::recIdentList()
 
 // Based off the EBNF - should return the type
 // <Expression> ::= <Term> ( (+|-) <Term>)* ;
-void MyPALParser::recExpression()
+void MyPALPureParser::recExpression()
 {
 	recTerm();
 	while (match("+") || match("-")) {
@@ -207,7 +207,7 @@ void MyPALParser::recExpression()
 
 // Based off the EBNF
 // <Term> ::= <Factor> ( (*|/) <Factor>)* ;
-void MyPALParser::recTerm()
+void MyPALPureParser::recTerm()
 {
 	recFactor();
 	while (match("*") || match("/")) {
@@ -219,7 +219,7 @@ void MyPALParser::recTerm()
 // <Factor> ::= (+|-)? ( <Value> | "(" <Expression> ")" ) ;
 // and
 // <Value> ::= Identifier | IntegerValue | RealValue ;
-void MyPALParser::recFactor()
+void MyPALPureParser::recFactor()
 {
 	if (match("+") || match("-")) {
 		// TODO: store token
