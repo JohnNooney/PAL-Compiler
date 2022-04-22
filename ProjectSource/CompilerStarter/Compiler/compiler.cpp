@@ -18,7 +18,7 @@
 //#include "myblock1compiler/apps/countLet.hpp"
 //#include "myblock1compiler/MyParserEBNF.hpp"
 #include "mypalcompiler/MyPALScanner.hpp"
-#include "mypalcompiler/MyPALPureParser.hpp"
+#include "mypalcompiler/MyPALParser.hpp"
 
 // Attempts to load a file from a path into a read-only file stream, or exits the program
 // entirely if it fails. This is a barebones implementation -- feel free to add to it to
@@ -75,7 +75,7 @@ int main(int arg_count, const char* args[]) {
 	}*/
 
 	// use PAL Parser
-	MyPALPureParser parser(scanner);
+	MyPALParser parser(scanner);
 	bool success = parser.compile();
 
 	for (const auto& error : parser.errors()) {
