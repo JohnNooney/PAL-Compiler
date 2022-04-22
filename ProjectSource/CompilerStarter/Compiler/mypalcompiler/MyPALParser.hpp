@@ -4,10 +4,10 @@
 #include "../CompilerKit/Parser.hpp"
 using namespace CompilerKit;
 
-class MyPALParser: public Parser {
+class MyPALParser: public RecoveringParser {
 public:
 
-    MyPALParser(Scanner& scanner) : Parser(scanner) {}
+    MyPALParser(Scanner& scanner) : RecoveringParser(scanner) {}
     virtual ~MyPALParser() {}
 
     bool compile();

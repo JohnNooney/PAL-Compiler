@@ -78,6 +78,10 @@ int main(int arg_count, const char* args[]) {
 	MyPALParser parser(scanner);
 	parser.recStarter();
 
+	for (const auto& error : parser.errors()) {
+		std::cout << error << "\n";
+	}
+
 	std::cout << "done.\n";
 
 	// run test program
