@@ -1,4 +1,4 @@
 PROGRAM test
-WITH num AS REAL
+WITH num AS REAL num2 AS INTEGER num3 AS REAL
 IN num = 2 - 4
 END 
