@@ -2,13 +2,16 @@
 #define _MyPALParser_HPP_
 
 #include "../CompilerKit/Parser.hpp"
+#include "MyPALSema.hpp"
+#include "list"
+
 using namespace CompilerKit;
 
-class MyPALPureParser : public RecoveringParser {
+class MyPALParser : public RecoveringParser {
 public:
 
-    MyPALPureParser(Scanner& scanner) : RecoveringParser(scanner) {}
-    virtual ~MyPALPureParser() {}
+    MyPALParser(Scanner& scanner) : RecoveringParser(scanner), sema(*this) {}
+    virtual ~MyPALParser() {}
 
     bool compile();
     void recStarter();
@@ -21,13 +24,14 @@ private:
     void recLoop();
     void recConditional();
     void recIO();
-    void recExpression();
-    void recTerm();
-    void recFactor();
+
+    Type recExpression();
+    Type recTerm();
+    Type recFactor();
     bool recBooleanExpr();
-    void recIdentList();
+    std::list<Token> recIdentList();
 
-
+    MyPALSema sema;
 };
 
 #endif 
