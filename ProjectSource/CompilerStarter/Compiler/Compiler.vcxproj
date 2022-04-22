@@ -151,8 +151,10 @@
     <ClCompile Include="myblock1compiler\MyParserEBNF.cpp" />
     <ClCompile Include="myblock1compiler\MyScanner.cpp" />
     <ClCompile Include="myblock1compiler\MySema.cpp" />
+    <ClCompile Include="mypalcompiler\MyPALParser.cpp" />
     <ClCompile Include="mypalcompiler\MyPALPureParser.cpp" />
     <ClCompile Include="mypalcompiler\MyPALScanner.cpp" />
+    <ClCompile Include="mypalcompiler\MyPALSema.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp" />
@@ -167,8 +169,10 @@
     <ClInclude Include="myblock1compiler\MyParserEBNF.hpp" />
     <ClInclude Include="myblock1compiler\MyScanner.hpp" />
     <ClInclude Include="myblock1compiler\MySema.hpp" />
+    <ClInclude Include="mypalcompiler\MyPALParser.hpp" />
     <ClInclude Include="mypalcompiler\MyPALPureParser.hpp" />
     <ClInclude Include="mypalcompiler\MyPALScanner.hpp" />
+    <ClInclude Include="mypalcompiler\MyPALSema.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="BLOCK1\block1-sum.txt" />

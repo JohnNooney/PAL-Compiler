@@ -60,6 +60,12 @@
     <ClCompile Include="mypalcompiler\MyPALScanner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mypalcompiler\MyPALParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mypalcompiler\MyPALSema.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompilerKit\Codegen.hpp">
@@ -102,6 +108,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mypalcompiler\MyPALScanner.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mypalcompiler\MyPALParser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mypalcompiler\MyPALSema.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
