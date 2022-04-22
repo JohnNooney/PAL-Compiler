@@ -27,9 +27,9 @@ void MyPALParser::recStarter() {
 	expect("WITH");
 	recVarDecls();
 	expect("IN");
-	do {
+	/*do {
 		recStatement();
-	} while (statementCheck());
+	} while (statementCheck());*/
 	expect("END");
 }
 
@@ -41,16 +41,26 @@ bool MyPALParser::statementCheck() {
 // <VarDecls> ::= (<IdentList> AS <Type>)* ;
 void MyPALParser::recVarDecls() {
 	while (have(Token::Identifier)) {
-		recIdentList();
+		std::list<Token> identList = recIdentList();
 		expect("AS");
 
 		// TODO: refactor to use sema to register token
-		if (match("REAL") || match("INTEGER"))
+		Type type = Type::Invalid;
+		if (match("REAL"))
 		{
+			type = Type::Real;
+		}
+		else if (match("INTEGER")) {
+			type = Type::Integer;
 		}
 		else {
-			// TODO: throw error missing type
 			syntaxError("<VarDecls>");
+		}
+
+		// add each token to sema
+		for (const Token ident : identList)
+		{
+			sema.define(ident, type);
 		}
 	}
 }
@@ -61,19 +71,19 @@ void MyPALParser::recStatement()
 {
 	if (have(Token::Identifier)) {
 		// recognise Assignment
-		recAssignment();
+		//recAssignment();
 	}
 	else if (have("UNTIL")) {
 		// recognise Loop
-		recLoop();
+		//recLoop();
 	}
 	else if (have("IF")) {
 		// recognise Conditional
-		recConditional();
+		//recConditional();
 	}
 	else if (have("INPUT") || have("OUTPUT")) {
 		// recognise IO
-		recIO();
+		//recIO();
 	}
 	else {
 		// Throw error
@@ -205,8 +215,9 @@ std::list<Token> MyPALParser::recIdentList()
 	std::list<Token> identList;
 
 	do {
+		Token var = current();
+
 		if (expect(Token::Identifier)) {
-			Token var = current();
 			identList.push_back(var);
 		}
 	} while (match(","));
