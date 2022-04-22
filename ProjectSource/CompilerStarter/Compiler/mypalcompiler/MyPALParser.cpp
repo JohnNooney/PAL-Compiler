@@ -22,7 +22,7 @@ void MyPALParser::recStarter() {
 }
 
 bool MyPALParser::statementCheck() {
-	return have(Token::Identifier) || have("UNTIL") || have("IF") || have("INPUT") ? true : false;
+	return have(Token::Identifier) || have("UNTIL") || have("IF") || have("INPUT") || have("OUTPUT") ? true : false;
 }
 
 // Based off the EBNF
@@ -59,7 +59,7 @@ void MyPALParser::recStatement()
 		// recognise Conditional
 		recConditional();
 	}
-	else if (have("INPUT")) {
+	else if (have("INPUT") || have("OUTPUT")) {
 		// recognise IO
 		recIO();
 	}
@@ -88,11 +88,13 @@ void MyPALParser::recLoop()
 	bool result = recBooleanExpr();
 
 	if (result) {
-		//skip token to end of statement
 		expect("REPEAT");
+
+		//TODO: still parse but pass false to skip token tracking to end of statement
 		while (statementCheck()) {
 			recStatement();
 		}
+
 		expect("ENDLOOP");
 	}
 	else {
@@ -128,8 +130,10 @@ void MyPALParser::recConditional()
 			recStatement();
 		}
 	}
-	else if (!result && match("ELSE")) {
+	// else if (!return && match("ELSE")) this will not work because it hasn't been parsed
+	if (match("ELSE")) {
 		while (statementCheck()) {
+			// TODO: pass !result if it should be executed
 			recStatement();
 		}
 	}
