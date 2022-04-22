@@ -1,5 +1,5 @@
-#ifndef _MyPALParser_HPP_
-#define _MyPALParser_HPP_
+#ifndef _MyPALPureParser_HPP_
+#define _MyPALPureParser_HPP_
 
 #include "../CompilerKit/Parser.hpp"
 using namespace CompilerKit;
