@@ -76,7 +76,7 @@ int main(int arg_count, const char* args[]) {
 
 	// use PAL Parser
 	MyPALPureParser parser(scanner);
-	parser.recStarter();
+	bool success = parser.compile();
 
 	for (const auto& error : parser.errors()) {
 		std::cout << error << "\n";
@@ -91,6 +91,5 @@ int main(int arg_count, const char* args[]) {
 		return countLet.count_lets(source);
 	}*/
 	
-	//return success ? EXIT_SUCCESS : EXIT_FAILURE;
-	return 0;
+	return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
