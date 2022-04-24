@@ -27,9 +27,9 @@ void MyPALParser::recStarter() {
 	expect("WITH");
 	recVarDecls();
 	expect("IN");
-	/*do {
+	do {
 		recStatement();
-	} while (statementCheck());*/
+	} while (statementCheck());
 	expect("END");
 }
 
@@ -44,7 +44,6 @@ void MyPALParser::recVarDecls() {
 		std::list<Token> identList = recIdentList();
 		expect("AS");
 
-		// TODO: refactor to use sema to register token
 		Type type = Type::Invalid;
 		if (match("REAL"))
 		{
@@ -71,11 +70,11 @@ void MyPALParser::recStatement()
 {
 	if (have(Token::Identifier)) {
 		// recognise Assignment
-		//recAssignment();
+		recAssignment();
 	}
 	else if (have("UNTIL")) {
 		// recognise Loop
-		//recLoop();
+		recLoop();
 	}
 	else if (have("IF")) {
 		// recognise Conditional
@@ -93,50 +92,56 @@ void MyPALParser::recStatement()
 
 // Based off the EBNF 
 // <Assignment> ::= Identifier = <Expression> ;
-//void MyPALPureParser::recAssignment()
-//{
-//	expect(Token::Identifier);
-//	expect("=");
-//	recExpression();
-//}
-//
-//// Based off the EBNF
-//// If <BooleanExpr> is true, skip to the statement following the
-//// ENDLOOP, otherwise execute the statements and repeat.
-//// <Loop> :: = UNTIL <BooleanExpr> REPEAT(<Statement>) * ENDLOOP;
-//void MyPALPureParser::recLoop()
-//{
-//	expect("UNTIL");
-//	bool result = recBooleanExpr();
-//
-//	if (result) {
-//		expect("REPEAT");
-//
-//		//TODO: still parse but pass false to skip token tracking to end of statement
-//		while (statementCheck()) {
-//			recStatement();
-//		}
-//
-//		expect("ENDLOOP");
-//	}
-//	else {
-//		expect("REPEAT");
-//
-//		while (!result)
-//		{
-//			// loop through all statements inside
-//			while (statementCheck()) {
-//				recStatement();
-//			}
-//
-//			result = recBooleanExpr();
-//		}
-//
-//		expect("ENDLOOP");
-//	}
-//
-//}
-//
+void MyPALParser::recAssignment()
+{
+	Token var = current();
+
+	expect(Token::Identifier);
+	expect("=");
+
+	Type right = recExpression();
+
+	//compare types of variable and expression result
+	sema.checkAssign(var, right);
+}
+
+// Based off the EBNF
+// If <BooleanExpr> is true, skip to the statement following the
+// ENDLOOP, otherwise execute the statements and repeat.
+// <Loop> :: = UNTIL <BooleanExpr> REPEAT(<Statement>) * ENDLOOP;
+void MyPALParser::recLoop()
+{
+	expect("UNTIL");
+	bool result = recBooleanExpr();
+
+	if (result) {
+		expect("REPEAT");
+
+		//TODO: still parse but pass false to skip token tracking to end of statement
+		while (statementCheck()) {
+			recStatement();
+		}
+
+		expect("ENDLOOP");
+	}
+	else {
+		expect("REPEAT");
+
+		while (!result)
+		{
+			// loop through all statements inside
+			while (statementCheck()) {
+				recStatement();
+			}
+
+			result = recBooleanExpr();
+		}
+
+		expect("ENDLOOP");
+	}
+
+}
+
 //// Based off the EBNF
 //// <Conditional> ::= IF <BooleanExpr> THEN (<Statement>)*
 ////						(ELSE(<Statement>)*)?
@@ -161,35 +166,39 @@ void MyPALParser::recStatement()
 //	}
 //	expect("ENDIF");
 //}
-//
-//// Based off the EBNF - returns bool based on the result
-//// <BooleanExpr> ::= <Expression> ("<" | "=" | ">") <Expression> ;
-//bool MyPALPureParser::recBooleanExpr()
-//{
-//	//TODO: store as left
-//	recExpression();
-//
-//	if (match("<")) {
-//		// TODO: store operator for a less than comparison
-//	}
-//	else if (match(">")) {
-//		// TODO: store operator for a greater than comparison
-//	}
-//	else if (match("=")) {
-//		// TODO: store operator for an equal comparison
-//	}
-//	else {
-//		// TODO: Throw Error
-//		syntaxError("<BooleanExpr>");
-//	}
-//
-//	//TODO: store as right
-//	recExpression();
-//
-//	// TODO: perform comparison
-//	return true;
-//}
-//
+
+// Based off the EBNF - returns bool based on the result
+// <BooleanExpr> ::= <Expression> ("<" | "=" | ">") <Expression> ;
+bool MyPALParser::recBooleanExpr()
+{
+	//TODO: store as left
+	auto type = recExpression();
+
+	Token op = current();
+	if (match("<")) {
+		// TODO: store operator for a less than comparison
+		
+	}
+	//else if (match(">")) {
+	//	// TODO: store operator for a greater than comparison
+	//}
+	//else if (match("=")) {
+	//	// TODO: store operator for an equal comparison
+	//}
+	//else {
+	//	// TODO: Throw Error
+	//	syntaxError("<BooleanExpr>");
+	//}
+
+	//TODO: store as right
+	auto right = recExpression();
+
+	sema.checkBoolean(type, op, right);
+
+	// TODO: perform comparison
+	return true;
+}
+
 //// Based off the EBNF - Input = read from standard input | Output = write to standard output
 //// <I-o> ::= INPUT <IdentList> | OUTPUT <Expression>(, <Expression>)*;
 //void MyPALPureParser::recIO()
@@ -225,52 +234,69 @@ std::list<Token> MyPALParser::recIdentList()
 	return identList;
 }
 
-//// Based off the EBNF - should return the type
-//// <Expression> ::= <Term> ( (+|-) <Term>)* ;
-//void MyPALPureParser::recExpression()
-//{
-//	recTerm();
-//	while (match("+") || match("-")) {
-//		recTerm();
-//	}
-//}
-//
-//// Based off the EBNF
-//// <Term> ::= <Factor> ( (*|/) <Factor>)* ;
-//void MyPALPureParser::recTerm()
-//{
-//	recFactor();
-//	while (match("*") || match("/")) {
-//		recFactor();
-//	}
-//}
-//
-//// Based off the EBNF
-//// <Factor> ::= (+|-)? ( <Value> | "(" <Expression> ")" ) ;
-//// and
-//// <Value> ::= Identifier | IntegerValue | RealValue ;
-//void MyPALPureParser::recFactor()
-//{
-//	if (match("+") || match("-")) {
-//		// TODO: store token
-//	}
-//
-//	if (match("(")) {
-//		recExpression();
-//		expect(")");
-//	}
-//	else if (match(Token::Identifier)) {
-//
-//	}
-//	else if (match(Token::Integer)) {
-//
-//	}
-//	else if (match(Token::Real)) {
-//
-//	}
-//	else {
-//		syntaxError("<Factor>");
-//	}
-//}
-//
-//
+// Based off the EBNF - should return the type
+// <Expression> ::= <Term> ( (+|-) <Term>)* ;
+Type MyPALParser::recExpression()
+{
+	auto type =	recTerm();
+	Token op = current();
+
+	while (match("+") || match("-")) {
+		auto right = recTerm();
+		type = sema.checkExpression(type, op, right);
+		op = current();
+	}
+
+	return type;
+}
+
+// Based off the EBNF
+// <Term> ::= <Factor> ( (*|/) <Factor>)* ;
+Type MyPALParser::recTerm()
+{
+	auto type = recFactor();
+	Token op = current();
+
+	while (match("*") || match("/")) {
+		auto right = recFactor();
+		type = sema.checkExpression(type, op, right);
+		op = current();
+	}
+
+	return type;
+}
+
+// Based off the EBNF
+// <Factor> ::= (+|-)? ( <Value> | "(" <Expression> ")" ) ;
+// and
+// <Value> ::= Identifier | IntegerValue | RealValue ;
+Type MyPALParser::recFactor()
+{
+	if (match("+") || match("-")) {
+		// TODO: store token
+
+	}
+
+	if (match("(")) {
+		auto type = recExpression();
+		expect(")");
+		return type;
+	}
+	else if (have(Token::Identifier)) {
+		Token var = current();
+		expect(Token::Identifier);
+		return sema.checkVariable(var);
+	}
+	else if (match(Token::Integer)) {
+		return Type::Integer;
+	}
+	else if (match(Token::Real)) {
+		return Type::Real;
+	}
+	else {
+		syntaxError("<Factor>");
+		return Type::Invalid;
+	}
+}
+
+

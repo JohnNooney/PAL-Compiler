@@ -20,15 +20,15 @@ private:
     void recVarDecls();
     void recStatement();
     bool statementCheck();
-    /*void recAssignment();
+    void recAssignment();
     void recLoop();
-    void recConditional();
-    void recIO();
+    /*void recConditional();
+    void recIO();*/
 
     Type recExpression();
     Type recTerm();
     Type recFactor();
-    bool recBooleanExpr();*/
+    bool recBooleanExpr();
     std::list<Token> recIdentList();
 
     MyPALSema sema;
