@@ -100,6 +100,7 @@ void MyPALParser::recAssignment()
 	expect("=");
 
 	Symbol right = recExpression();
+	std::cout << "assignment value = " << right.token.text() << std::endl;
 
 	//compare types of variable and expression result
 	sema.checkAssign(var, right.type);
@@ -245,6 +246,9 @@ Symbol MyPALParser::recExpression()
 		auto right = recTerm();
 		left.type = sema.checkExpression(left.type, op, right.type);
 		op = current();
+
+
+		// TODO: Perform computation
 	}
 
 	return left;
@@ -278,19 +282,19 @@ Symbol MyPALParser::recFactor()
 
 	}
 
+
+	Token var = current();
 	if (match("(")) {
 		auto type = recExpression();
 		expect(")");
 		return type;
 	}
 	else if (have(Token::Identifier)) {
-		Token var = current();
 		expect(Token::Identifier);
 		Symbol tempSymb = Symbol{ var, sema.checkVariable(var) };
 		return tempSymb;
 	}
 	else if (match(Token::Integer)) {
-		Token var = current();
 		Symbol tempSymb = Symbol{var, Type::Integer};
 		return tempSymb;
 	}
@@ -301,7 +305,6 @@ Symbol MyPALParser::recFactor()
 	}
 	else {
 		syntaxError("<Factor>");
-		Token var = current();
 		Symbol tempSymb = Symbol{ var, Type::Invalid };
 		return tempSymb;
 	}
