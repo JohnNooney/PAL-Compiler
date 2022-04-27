@@ -79,7 +79,7 @@ const void Sema::binaryExprError(const Token& op, Type lhs, Type rhs) {
 
 const void Sema::booleanExprError(const Token& op, Type lhs, Type rhs) {
     std::stringstream buf;
-    buf << "invalid operands to binary expression";
+    buf << "invalid operands to boolean expression";
     buf << " ('" << typeToString(lhs) << "' " << op.text() << " '" << typeToString(rhs) << "')";
     parser_.addError(Error::Semantic(buf.str(), op));
 }
