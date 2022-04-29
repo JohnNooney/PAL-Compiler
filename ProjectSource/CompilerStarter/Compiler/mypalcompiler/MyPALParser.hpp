@@ -23,11 +23,11 @@ private:
     void recAssignment();
     void recLoop();
     void recConditional();
-    //void recIO();
+    void recIO();
 
-    Symbol recExpression();
-    Symbol recTerm();
-    Symbol recFactor();
+    Type recExpression();
+    Type recTerm();
+    Type recFactor();
     bool recBooleanExpr();
     std::list<Token> recIdentList();
 

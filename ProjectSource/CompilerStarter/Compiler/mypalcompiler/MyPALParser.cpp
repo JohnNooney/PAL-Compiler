@@ -82,7 +82,7 @@ void MyPALParser::recStatement()
 	}
 	else if (have("INPUT") || have("OUTPUT")) {
 		// recognise IO
-		//recIO();
+		recIO();
 	}
 	else {
 		// Throw error
@@ -99,11 +99,10 @@ void MyPALParser::recAssignment()
 	expect(Token::Identifier);
 	expect("=");
 
-	Symbol right = recExpression();
-	std::cout << "assignment value = " << right.token.text() << std::endl;
+	auto right = recExpression();
 
 	//compare types of variable and expression result
-	sema.checkAssign(var, right.type);
+	sema.checkAssign(var, right);
 }
 
 // Based off the EBNF
@@ -152,16 +151,12 @@ void MyPALParser::recConditional()
 	expect("IF");
 	bool result = recBooleanExpr();
 	expect("THEN");
-	// TODO: Make sure to only run this code when bool is true
-	/*if (result) {*/
-		while (statementCheck()) {
-			recStatement();
-		}
-	//}
-	// else if (!return && match("ELSE")) this will not work because it hasn't been parsed
+	while (statementCheck()) {
+		recStatement();
+	}
+		
 	if (match("ELSE")) {
 		while (statementCheck()) {
-			// TODO: pass !result if it should be executed
 			recStatement();
 		}
 	}
@@ -170,53 +165,43 @@ void MyPALParser::recConditional()
 
 // Based off the EBNF - returns bool based on the result
 // <BooleanExpr> ::= <Expression> ("<" | "=" | ">") <Expression> ;
-bool MyPALParser::recBooleanExpr()
+void MyPALParser::recBooleanExpr()
 {
 	auto left = recExpression();
 
 	Token op = current();
 	if (match(">") || match("<") || match("=")) {
 		auto right = recExpression();
-		sema.checkBoolean(left.type, op, right.type);
-
-		// perform comparison
-		if (op.text() == ">") {
-			// TODO: store operator for a less than comparison
-			std::cout << "num value: " << left.token.value<int>() << std::endl;
-			std::cout << "num2 value: " << right.token.value<float>() << std::endl;
-			return left.token.value<float>() > right.token.value<float>();
-		}
-		else if (op.text() == "<") {
-			// TODO: store operator for a greater than comparison
-		}
-		else if (op.text() == "=") {
-			// TODO: store operator for an equal comparison
-		}
+		sema.checkBoolean(left, op, right);
 	}
 	else {
-		syntaxError("<BooleanExpr>");
+		syntaxError("<BooleanExpr> Invalid comparison operator");
 	}
-
-	return false;
 }
 
-//// Based off the EBNF - Input = read from standard input | Output = write to standard output
-//// <I-o> ::= INPUT <IdentList> | OUTPUT <Expression>(, <Expression>)*;
-//void MyPALPureParser::recIO()
-//{
-//	if (match("INPUT")) {
-//		recIdentList();
-//	}
-//	else if (match("OUTPUT")) {
-//		do {
-//			recExpression();
-//		} while (match(","));
-//	}
-//	else {
-//		syntaxError("<I-o>");
-//	}
-//
-//}
+// Based off the EBNF - Input = read from standard input | Output = write to standard output
+// <I-o> ::= INPUT <IdentList> | OUTPUT <Expression>(, <Expression>)*;
+void MyPALParser::recIO()
+{
+	if (match("INPUT")) {
+		std::list<Token> identList = recIdentList();
+
+		for (const Token ident : identList)
+		{
+			// check that each variable exists
+			sema.checkVariable(ident);
+		}
+	}
+	else if (match("OUTPUT")) {
+		do {
+			recExpression();
+		} while (match(","));
+	}
+	else {
+		syntaxError("<I-o>");
+	}
+
+}
 
 // Based off the EBNF 
 // <IdentList> ::= Identifier ( , Identifier)* ;
@@ -237,14 +222,14 @@ std::list<Token> MyPALParser::recIdentList()
 
 // Based off the EBNF - should return the type
 // <Expression> ::= <Term> ( (+|-) <Term>)* ;
-Symbol MyPALParser::recExpression()
+Type MyPALParser::recExpression()
 {
 	auto left =	recTerm();
 	Token op = current();
 
 	while (match("+") || match("-")) {
 		auto right = recTerm();
-		left.type = sema.checkExpression(left.type, op, right.type);
+		left = sema.checkExpression(left, op, right);
 		op = current();
 
 
@@ -256,14 +241,14 @@ Symbol MyPALParser::recExpression()
 
 // Based off the EBNF
 // <Term> ::= <Factor> ( (*|/) <Factor>)* ;
-Symbol MyPALParser::recTerm()
+Type MyPALParser::recTerm()
 {
 	auto left = recFactor();
 	Token op = current();
 
 	while (match("*") || match("/")) {
 		auto right = recFactor();
-		left.type = sema.checkExpression(left.type, op, right.type);
+		left = sema.checkExpression(left, op, right);
 		op = current();
 	}
 
@@ -275,38 +260,35 @@ Symbol MyPALParser::recTerm()
 // <Factor> ::= (+|-)? ( <Value> | "(" <Expression> ")" ) ;
 // and
 // <Value> ::= Identifier | IntegerValue | RealValue ;
-Symbol MyPALParser::recFactor()
+Type MyPALParser::recFactor()
 {
+	bool negative = false;
 	if (match("+") || match("-")) {
-		// TODO: store token
-
+		// TODO: store in token value
+		// if - then set value to negative (minus itself x2)
+		negative = true;
 	}
 
 
-	Token var = current();
 	if (match("(")) {
 		auto type = recExpression();
 		expect(")");
 		return type;
 	}
 	else if (have(Token::Identifier)) {
+		Token var = current();
 		expect(Token::Identifier);
-		Symbol tempSymb = Symbol{ var, sema.checkVariable(var) };
-		return tempSymb;
+		return sema.checkVariable(var);
 	}
 	else if (match(Token::Integer)) {
-		Symbol tempSymb = Symbol{var, Type::Integer};
-		return tempSymb;
+		return Type::Integer;
 	}
 	else if (match(Token::Real)) {
-		Token var = current();
-		Symbol tempSymb = Symbol{ var, Type::Real };
-		return tempSymb;
+		return Type::Real;
 	}
 	else {
 		syntaxError("<Factor>");
-		Symbol tempSymb = Symbol{ var, Type::Invalid };
-		return tempSymb;
+		return Type::Invalid;
 	}
 }
 
