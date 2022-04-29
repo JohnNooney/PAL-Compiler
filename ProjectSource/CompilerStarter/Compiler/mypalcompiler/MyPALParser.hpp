@@ -28,7 +28,7 @@ private:
     Type recExpression();
     Type recTerm();
     Type recFactor();
-    bool recBooleanExpr();
+    void recBooleanExpr();
     std::list<Token> recIdentList();
 
     MyPALSema sema;

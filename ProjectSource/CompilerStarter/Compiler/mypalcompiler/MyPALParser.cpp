@@ -112,7 +112,8 @@ void MyPALParser::recAssignment()
 void MyPALParser::recLoop()
 {
 	expect("UNTIL");
-	bool result = recBooleanExpr();
+	
+	recBooleanExpr();
 
 	expect("REPEAT");
 
@@ -131,8 +132,11 @@ void MyPALParser::recLoop()
 void MyPALParser::recConditional()
 {
 	expect("IF");
-	bool result = recBooleanExpr();
+	
+	recBooleanExpr();
+	
 	expect("THEN");
+	
 	while (statementCheck()) {
 		recStatement();
 	}
