@@ -86,7 +86,7 @@ void MyPALParser::recStatement()
 	}
 	else {
 		// Throw error
-		syntaxError("Statement");
+		syntaxError("<Statement>");
 	}
 }
 
@@ -117,7 +117,6 @@ void MyPALParser::recLoop()
 
 	expect("REPEAT");
 
-	// still parse but pass false to skip token tracking to end of statement
 	while (statementCheck()) {
 		recStatement();
 	}
