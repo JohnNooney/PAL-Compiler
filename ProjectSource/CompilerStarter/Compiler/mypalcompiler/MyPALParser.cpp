@@ -114,32 +114,14 @@ void MyPALParser::recLoop()
 	expect("UNTIL");
 	bool result = recBooleanExpr();
 
-	if (result) {
-		expect("REPEAT");
+	expect("REPEAT");
 
-		//TODO: still parse but pass false to skip token tracking to end of statement
-		while (statementCheck()) {
-			recStatement();
-		}
-
-		expect("ENDLOOP");
-	}
-	else {
-		expect("REPEAT");
-
-		while (!result)
-		{
-			// loop through all statements inside
-			while (statementCheck()) {
-				recStatement();
-			}
-
-			result = recBooleanExpr();
-		}
-
-		expect("ENDLOOP");
+	// still parse but pass false to skip token tracking to end of statement
+	while (statementCheck()) {
+		recStatement();
 	}
 
+	expect("ENDLOOP");
 }
 
 // Based off the EBNF
