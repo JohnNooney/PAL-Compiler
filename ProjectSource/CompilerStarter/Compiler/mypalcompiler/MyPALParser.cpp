@@ -53,7 +53,7 @@ void MyPALParser::recVarDecls() {
 			type = Type::Integer;
 		}
 		else {
-			syntaxError("<VarDecls>");
+			syntaxError("<VarDecls> invalid type decleration.");
 		}
 
 		// add each token to sema
@@ -182,6 +182,7 @@ void MyPALParser::recIO()
 			recExpression();
 		} while (match(","));
 	}
+	// this will never be hit since this method only runs if the program has INPUT or OUTPUT
 	else {
 		syntaxError("<I-o>");
 	}
@@ -216,9 +217,6 @@ Type MyPALParser::recExpression()
 		auto right = recTerm();
 		left = sema.checkExpression(left, op, right);
 		op = current();
-
-
-		// TODO: Perform computation
 	}
 
 	return left;
