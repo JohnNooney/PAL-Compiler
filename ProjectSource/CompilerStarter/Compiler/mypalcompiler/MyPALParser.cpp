@@ -245,11 +245,8 @@ Type MyPALParser::recTerm()
 // <Value> ::= Identifier | IntegerValue | RealValue ;
 Type MyPALParser::recFactor()
 {
-	bool negative = false;
 	if (match("+") || match("-")) {
-		// TODO: store in token value
-		// if - then set value to negative (minus itself x2)
-		negative = true;
+		// TODO: modify value 
 	}
 
 
