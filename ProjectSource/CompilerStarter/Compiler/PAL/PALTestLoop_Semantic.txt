@@ -1,5 +1,5 @@
 PROGRAM test
-WITH num, num2 AS INTEGER
+WITH num AS REAL num2 AS INTEGER
 IN 
 num = 2 
 num2 = 4
