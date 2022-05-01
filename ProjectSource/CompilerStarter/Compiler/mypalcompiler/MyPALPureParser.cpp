@@ -38,7 +38,7 @@ void MyPALPureParser::recVarDecls() {
 		} 
 		else {
 			// TODO: throw error missing type
-			syntaxError("<VarDecls>");
+			syntaxError("<VarDecls> invalid type decleration.");
 		}
 	}
 }
@@ -85,33 +85,17 @@ void MyPALPureParser::recAssignment()
 void MyPALPureParser::recLoop()
 {
 	expect("UNTIL");
-	bool result = recBooleanExpr();
+	
+	recBooleanExpr();
 
-	if (result) {
-		expect("REPEAT");
+	expect("REPEAT");
 
-		//TODO: still parse but pass false to skip token tracking to end of statement
-		while (statementCheck()) {
-			recStatement();
-		}
-
-		expect("ENDLOOP");
+	// loop through all statements inside
+	while (statementCheck()) {
+		recStatement();
 	}
-	else {
-		expect("REPEAT");
 
-		while (!result)
-		{
-			// loop through all statements inside
-			while (statementCheck()) {
-				recStatement();
-			}
-
-			result = recBooleanExpr();
-		}
-
-		expect("ENDLOOP");
-	}
+	expect("ENDLOOP");
 	
 }
 
@@ -122,15 +106,15 @@ void MyPALPureParser::recLoop()
 void MyPALPureParser::recConditional()
 {
 	expect("IF");
-	bool result = recBooleanExpr();
+	
+	recBooleanExpr();
+
 	expect("THEN");
-	// TODO: Make sure to only run this code when bool is true
-	if (result) {
-		while (statementCheck()) {
-			recStatement();
-		}
+
+	while (statementCheck()) {
+		recStatement();
 	}
-	// else if (!return && match("ELSE")) this will not work because it hasn't been parsed
+
 	if (match("ELSE")) {
 		while (statementCheck()) {
 			// TODO: pass !result if it should be executed
@@ -142,30 +126,17 @@ void MyPALPureParser::recConditional()
 
 // Based off the EBNF - returns bool based on the result
 // <BooleanExpr> ::= <Expression> ("<" | "=" | ">") <Expression> ;
-bool MyPALPureParser::recBooleanExpr()
+void MyPALPureParser::recBooleanExpr()
 {	
-	//TODO: store as left
 	recExpression();
 
-	if (match("<")) {
-		// TODO: store operator for a less than comparison
-	}
-	else if (match(">")) {
-		// TODO: store operator for a greater than comparison
-	}
-	else if (match("=")) {
-		// TODO: store operator for an equal comparison
+	if (match(">") || match("<") || match("=")) {
+		recExpression();
 	}
 	else {
-		// TODO: Throw Error
-		syntaxError("<BooleanExpr>");
+		syntaxError("<BooleanExpr> Invalid comparison operator");
 	}
 
-	//TODO: store as right
-	recExpression();
-
-	// TODO: perform comparison
-	return true;
 }
 
 // Based off the EBNF - Input = read from standard input | Output = write to standard output
@@ -180,6 +151,7 @@ void MyPALPureParser::recIO()
 			recExpression();
 		} while (match(","));
 	}
+	// this will never be hit since this method only runs if the program has INPUT or OUTPUT
 	else {
 		syntaxError("<I-o>");
 	}
@@ -222,7 +194,7 @@ void MyPALPureParser::recTerm()
 void MyPALPureParser::recFactor()
 {
 	if (match("+") || match("-")) {
-		// TODO: store token
+		
 	}
 
 	if (match("(")) {

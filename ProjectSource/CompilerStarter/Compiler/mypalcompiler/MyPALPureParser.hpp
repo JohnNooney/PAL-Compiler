@@ -24,7 +24,7 @@ private:
     void recExpression();
     void recTerm();
     void recFactor();
-    bool recBooleanExpr();
+    void recBooleanExpr();
     void recIdentList();
 
 
