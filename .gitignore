@@ -39,4 +39,4 @@ Debug
 *.exe
 *.out
 *.app
-
+!Compiler.exe
