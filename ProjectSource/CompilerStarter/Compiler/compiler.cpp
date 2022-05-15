@@ -69,8 +69,5 @@ int main(int arg_count, const char* args[]) {
 		std::cout << error << "\n";
 	}
 
-	std::cout << "done.\n";
-
-	
 	return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
