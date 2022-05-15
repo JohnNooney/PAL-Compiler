@@ -59,20 +59,7 @@ int main(int arg_count, const char* args[]) {
 	std::ifstream source = load_file(args[1]);
 
 	// create scanner object
-	//MyScanner scanner(source);
 	MyPALScanner scanner(source);
-
-	// use BNF Parser
-	/*MyParser parser = MyParser(scanner);
-	parser.recStarter();*/
-
-	// use EBNF Parser
-	/*MyParserEBNF parserEBNF(scanner);
-	bool success = parserEBNF.compile();
-
-	for (const auto& error : parserEBNF.errors()) {
-		std::cout << error << "\n";
-	}*/
 
 	// use PAL Parser
 	MyPALParser parser(scanner);
@@ -84,12 +71,6 @@ int main(int arg_count, const char* args[]) {
 
 	std::cout << "done.\n";
 
-	// run test program
-	/*CountLet countLet = CountLet();
-	std::string cmd{ args[0] };
-	if (cmd == "count-let") {
-		return countLet.count_lets(source);
-	}*/
 	
 	return success ? EXIT_SUCCESS : EXIT_FAILURE;
 }
