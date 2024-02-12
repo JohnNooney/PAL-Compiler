@@ -1,0 +1,4 @@
+PROGRAM test
+WITH num AS REAL
+IN num = 2 - 4
+END ;

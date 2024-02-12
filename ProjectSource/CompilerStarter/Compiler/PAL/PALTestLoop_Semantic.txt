@@ -1,0 +1,9 @@
+PROGRAM test
+WITH num AS REAL num2 AS INTEGER
+IN 
+num = 2 
+num2 = 4
+UNTIL num = num2 
+REPEAT num = num + 1
+ENDLOOP
+END 

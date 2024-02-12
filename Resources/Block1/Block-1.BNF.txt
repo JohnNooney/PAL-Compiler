@@ -1,0 +1,58 @@
+// Block-1
+// A BNF for a simple block-structured language with variable declarations.
+// Uses only standard BNF in the syntax rules.
+// The language is free-format but case-sensitive.
+//
+// Semantics.
+// Scope of a variable identifier is the entire program.
+// integer and real (decimal) values are used in this language with strict typing and no coercion.
+// Statement and expression semantics are as would be expected.
+//
+// (c) Allan C. Milne  2006, 13th April 2011.
+// Uses EBNF version 3 with .Net regular expressions for the microsyntax.
+
+
+<Program> ::= <Declarations> <Block> ;
+
+<Declarations> ::= <Declaration> <Declarations> | <> ;
+
+<Declaration> ::= <Type> Identifier <Identifier-List> ;
+
+<Type> ::= int | real ;
+
+<Identifier-List> ::= , Identifier <Identifier-List> | <> ;
+
+<Block> ::= <Statement> |
+            begin <Statement-List> end ;
+
+<Statement-List> ::= <Statement> <Statement-List> | <> ;
+
+<Statement> ::= <Let-Statement>  |
+                <For-Statement>  |
+                get Identifier       |
+                put <Expression> ;
+
+<Let-Statement> ::= let Identifier := <Expression> ;
+
+<For-Statement> ::= for Identifier := <Expression> to <Expression> do <Block> ;
+
+<Expression> ::= <Term> <Rest-Expr> ;
+<Rest-Expr> ::= "+" <Term> <Rest-Expr> |
+                - <Term> <Rest-Expr> |
+                <> ;
+
+<Term> ::= <Factor> <Rest-Term> ;
+<Rest-Term> ::= * <Factor> <Rest-Term> |
+                / <Factor> <Rest-Term>   |
+                  <> ;
+
+<Factor> ::= Identifier | IntValue | RealValue | "(" <Expression> ")" ;
+
+
+microsyntax
+
+Identifier <|[a-zA-Z][\w_.]*
+
+IntValue <|\d+
+
+RealValue <|\d+\.\d*

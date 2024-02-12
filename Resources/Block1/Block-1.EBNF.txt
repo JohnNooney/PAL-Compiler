@@ -1,0 +1,46 @@
+// Block-1
+// An extended BNF (EBNF) for a simple block-structured language with variable declarations.
+// This EBNF defines the same language as the BNF version found in Block-1.BNF.txt.
+//
+// The language is free-format but case-sensitive.
+//
+// Semantics.
+// Scope of a variable identifier is the entire program.
+// Integer and real (decimal) values are used in this language with strict typing and no coercion.
+// Statement and expression semantics are as would be expected.
+//
+// (c) Allan C. Milne , 2008, 13 April 2011.
+//     Adam Sampson 2019-03-15
+// Uses EBNF version3 with .Net regular expressions for the microsyntax.
+
+
+<Program> ::= (<Declaration>)* <Block> ;
+
+<Declaration> ::= (int | real) Identifier ( , Identifier)* ;
+
+<Block> ::= <Statement> |
+            begin (<Statement>)* end ;
+
+<Statement> ::= <Let-Statement>  |
+                <For-Statement>  |
+                get Identifier       |
+                put <Expression> ;
+
+<Let-Statement> ::= let Identifier := <Expression> ;
+
+<For-Statement> ::= for Identifier := <Expression> to <Expression> do <Block> ;
+
+<Expression> ::= <Term> ( ("+"|-) <Term>)* ;
+
+<Term> ::= <Factor> ( (*|/) <Factor>)* ;
+
+<Factor> ::= Identifier | IntValue | RealValue | "(" <Expression> ")" ;
+
+
+microsyntax
+
+Identifier <|[a-zA-Z][\w_.]*
+
+IntValue <|\d+
+
+RealValue <|\d+\.\d*

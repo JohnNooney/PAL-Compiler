@@ -1,0 +1,10 @@
+PROGRAM test
+WITH num AS REAL num2 AS INTEGER
+IN 
+num = 2 
+num2 = 4
+IF num = num2
+THEN num = (num + 3)
+ELSE num2 = (num2 + 4)
+ENDIF
+END 

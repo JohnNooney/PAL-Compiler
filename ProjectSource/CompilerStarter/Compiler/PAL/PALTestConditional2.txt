@@ -1,0 +1,9 @@
+PROGRAM test
+WITH num, num2 AS INTEGER
+IN 
+num = 2 
+num2 = 4
+IF num = num2
+THEN num = (num + 3)
+ENDIF
+END 

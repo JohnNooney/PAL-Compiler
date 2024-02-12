@@ -1,0 +1,8 @@
+PROGRAM test
+WITH num AS REAL num2 AS INTEGER
+IN 
+num = 2 
+num2 = 4
+OUTPUT num, num2 + num
+INPUT num3
+END 

@@ -1,6 +1,15 @@
 # Prerequisites
 *.d
 
+*.vscode
+*.vs
+*.vcxproj
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.filters
+ProjectSource/CompilerStarter/Compiler/Compiler.vcxproj.user
+
+Debug
+
 # Compiled Object files
 *.slo
 *.lo
@@ -30,3 +39,4 @@
 *.exe
 *.out
 *.app
+!Compiler.exe
